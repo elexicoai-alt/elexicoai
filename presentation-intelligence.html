@@ -1237,10 +1237,14 @@
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// ─── State ────────────────────────────────────────────────────────────────
+// ─── Set API key & model ───────────────────────────────────────────────────
+const CURRENT_API_KEY = 'AIzaSyCErZ9YgaGeSTqMz27XHnBve0z1ZGIjaVc';
 const DEFAULT_MODEL = 'gemini-2.0-flash';
+localStorage.setItem('prism_api_key', CURRENT_API_KEY);
+
+// ─── State ────────────────────────────────────────────────────────────────
 let state = {
-  apiKey: localStorage.getItem('prism_api_key') || '',
+  apiKey: CURRENT_API_KEY,
   model: localStorage.getItem('prism_model') || DEFAULT_MODEL,
   detail: localStorage.getItem('prism_detail') || 'detailed',
   scale: parseFloat(localStorage.getItem('prism_scale') || '2'),
@@ -1258,10 +1262,6 @@ function init() {
     if (e.target.files[0]) handleFile(e.target.files[0]);
     e.target.value = '';
   });
-  // Auto-open settings if no API key is configured
-  if (!state.apiKey) {
-    setTimeout(() => openSettings(), 600);
-  }
 }
 
 function updateApiStatus() {
